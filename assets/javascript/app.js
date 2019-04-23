@@ -14,8 +14,6 @@
 
 // Users from many different machines must be able to view same train times.
 
-// Styling and theme are completely up to you. Get Creative!
-
 
 
 // Initialize Firebase
@@ -29,3 +27,61 @@ var config = {
   };
   firebase.initializeApp(config);
 
+var database = firebase.database();
+
+// add train using on click event listener
+$("#add-train").on("click", function(event){
+    event.preventDefault();
+
+//   store user input
+var trainName = $("#name-input").val().trim();
+var trainDestination = $("#destination-input").val().trim();
+var firstTrainTime = $("#mTime-input").val().trim();
+var trainFrequency = $("#frequency-input").val().trim();
+
+// create local temporary object for holding train data
+var newTrain = {
+    name: trainName,
+    destination: trainDestination,
+    initialTime: firstTrainTime,
+    frequency: trainFrequency
+};
+
+// upload train data to the firebase database
+database.ref().push(newTrain);
+
+// clear all text boxes for future input
+$("#name-input").val("");
+$("#destination-input").val("");
+$("#mTime-input").val("");
+$("#frequency-input").val("");
+
+});
+
+// Create a firebase event to add train data to a row in the html when user submits entry
+database.ref().on("child_added", function(childSnapshot){
+
+    console.log(childSnapshot.val());
+
+// Store collected data into variables
+var trainName = childSnapshot.val().name;
+var trainDestination = childSnapshot.val().destination;
+var firstTrainTime = childSnapshot.val().initialTime;
+var trainFrequency = childSnapshot.val().frequency;
+
+// calculations go here
+var nextArrival = (firstTrainTime - trainFrequency);
+var minutesAway = (nextArrival - "currentTime");
+
+// build out the new row to be added to the html
+var newRow = $("<tr>").append(
+    $("<td scope='col'>").text(trainName),
+    $("<td scope='col'>").text(trainDestination),
+    $("<td scope='col'>").text(trainFrequency),
+    $("<td scope='col'>").text(nextArrival),
+    $("<td scope='col'>").text(minutesAway),
+  );
+
+// Append the new row to the table in the html
+$("#trainInfo").append(newRow);
+});
