@@ -29,6 +29,10 @@ var config = {
 
 var database = firebase.database();
 
+// display current time
+setInterval(function() {
+  $("#current-time").html(moment().format('hh:mm:ss a'))
+}, 1000);
 
 // add train using on click event listener
 $("#add-train").on("click", function(event){
@@ -75,16 +79,23 @@ var trainName = childSnapshot.val().name;
 var trainDestination = childSnapshot.val().destination;
 var firstTrainTime = childSnapshot.val().initialTime;
 var trainFrequency = childSnapshot.val().frequency;
+console.log("Name: " + trainName);
+console.log("Destination: " + trainDestination);
+console.log("first train time: " + firstTrainTime);
+console.log("Frequency: " + trainFrequency);
 
 // calculations go here
-var firstTrain = moment(childSnapshot.val().firstTrainTime);
-var now = moment(childSnapshot.val().dataAdded);
-var nextArrival = now.diff(firstTrain - trainFrequency);
-var minutesAway = (nextArrival - now);
-console.log(firstTrain);
-console.log(now);
-console.log(nextArrival);
+var currentTime = moment().format("HH:mm a");
+console.log("Current Time: " + currentTime);
+var nextArrival = moment().add(firstTrainTime, trainFrequency).format("hh:mm a");
+console.log("Next Arrival: " + nextArrival);
+if(currentTime > nextArrival){
+  nextArrival += trainFrequency;
+}
+var minutesAway = moment().subtract(nextArrival, currentTime).format("mm");
 console.log(minutesAway);
+
+
 
 // build out the new row to be added to the html
 var newRow = $("<tr>").append(
