@@ -1,8 +1,19 @@
 
 body {
     margin: 0;
-    padding: 5rem;
+    padding: 3rem;
     background-image: url("../images/platform-3717066_1920.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    font-family: 'Courgette', cursive;
+}
+.jumbotron, thead {
+    background: rgba(206, 213, 219, 0.8);
+}
+.time, tbody {
+    margin-bottom: 2rem;
+    background: rgba(103, 111, 119, 0.8);
+}
+.card {
+    background: rgba(52, 58, 64, 0.8);
 }

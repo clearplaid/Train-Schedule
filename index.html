@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Train Schedule</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
      <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
@@ -19,23 +19,23 @@
     <div class="container">
         <div class="jumbotron">
             <h1 class="text-center">Train Schedule</h1>
-            <h3 class="text-center">Current Time: <span id="current-time"></span></h3>
         </div>
     </div>
         <!--Train Output Table-->
-    <div class="container table-responsive{-sm|-md|-lg|-xl}">
-        <table class="table">
-                <h2 class="text-white bg-secondary">Current Train Schedule</h2>
-            <thead class="table-secondary text-center">
+    <div class="container table-responsive-sm">
+        <table class="table d-sm-table">
+                <h2 class="text-center text-white rounded time">Current Time: <span id="current-time"></span></h2>
+            <thead class="text-center">
                 <tr>
                 <th scope="col">Train Name</th>
                 <th scope="col">Destination</th>
                 <th scope="col">Frequency (min)</th>
                 <th scope="col">Next Arrival</th>
                 <th scope="col">Minutes Away</th>
+                <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody id="trainInfo" class="text-white text-center bg-secondary">
+            <tbody id="trainInfo" class="text-white text-center">
 
             </tbody>
         </table>
@@ -46,7 +46,7 @@
 
         <!--Train Input Form-->
         <div class="col-sm-12">
-            <div class="card card-default bg-dark" style="padding:1%">
+            <div class="card card-default" style="padding:1%">
                 <div class="card-header text-white">
                         <label for="add-train">Add Train</label>
                 </div>
