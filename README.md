@@ -1,4 +1,5 @@
-# Train-Schedule
+Train-Schedule
+
 Train schedule application that incorporates Firebase to host arrival and departure data.
 When adding trains, administrators are able to submit the following:
   Train Name
