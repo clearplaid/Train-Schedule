@@ -72,58 +72,45 @@ $("#frequency-input").val("");
 // Create a firebase event to add train data to a row in the html when user submits entry
 database.ref().on("child_added", function(childSnapshot){
 
-    console.log(childSnapshot.val());
-
 // Store collected data into variables
 var trainName = childSnapshot.val().name;
 var trainDestination = childSnapshot.val().destination;
 var firstTrainTime = childSnapshot.val().initialTime;
 var trainFrequency = childSnapshot.val().frequency;
 var timeStamp = childSnapshot.val().dataAdded;
-console.log("Name: " + trainName);
-console.log("Destination: " + trainDestination);
-console.log("first train time: " + firstTrainTime);
-console.log("Frequency: " + trainFrequency);
-console.log("timeStamp: " + timeStamp);
 
-// calculations go here
+// calculations for nest arrival and minutes away
+
 // Initial Train Time (pushed back 1 year to make sure it comes before current time)
 var convertFirstTime = moment(firstTrainTime, "HH:mm").subtract(1, "years");
-console.log(convertFirstTime);
 
 // Current Time
 var currentTime = moment();
-console.log("Current Time: " + moment(currentTime).format("hh:mm"));
 
 // Difference between the times
 var timeDiff = moment().diff(moment(convertFirstTime), "minutes");
-console.log("Time Difference: " + timeDiff);
 
 // Time apart (remainder)
 var remainingTime = timeDiff % trainFrequency;
-console.log(remainingTime);
 
 // Minutes Until Next Train Arrives
 var minutesAway = trainFrequency - remainingTime;
-console.log("Minutes Away: " + minutesAway);
 
 // Next Train
 var nextArrival = moment().add(minutesAway, "minutes");
-console.log("Next Arrival: " + moment(nextArrival).format("hh:mm"));
-
-
 
 // build out the new row to be added to the html
 var newRow = $("<tr>").append(
     $("<td scope='col'>").text(trainName),
     $("<td scope='col'>").text(trainDestination),
     $("<td scope='col'>").text(trainFrequency),
-    $("<td scope='col'>").text(moment(nextArrival).format("hh:mm")),
-    $("<td scope='col'>").text(minutesAway),
+    $("<td scope='col'>").text(moment(nextArrival).format("hh:mm a")),
+    $("<td scope='col'class='minutes-away'>").text(minutesAway),
     $("<td scope='col' class='delete'><button class='delete-train rounded' data-key='"+ childSnapshot.key + "'>Delete</button>" + "</td>"))
 
 // Append the new row to the table in the html
 $("#trainInfo").append(newRow);
+
 });
 
 // delete train
